@@ -21,9 +21,7 @@ public class FileReader {
 
 	public static void main(String[] args) throws Exception {
 		FileReader rf = new FileReader();	
-		//rf.loadDocument("D://PPD_Project//Preclarus//EDI Integration//1buv00n5an4sv1.fnf");
-//		rf.readFile("D://PPD_Project//Preclarus//EDI Integration//1buv00n5an4sv1.fnf", "D://PPD_Project//Preclarus//EDI Integration//smallfile.txt");
-		
+
 		Properties rules = loadRules();
 		
 		System.out.println("ISA field value: " + rules.getProperty("ISA"));
@@ -61,11 +59,11 @@ public class FileReader {
 //
 //	}
 	
-	public static Properties loadRules() {
+	public static Properties loadProperties(String filePath) {
 		FileInputStream fileInput = null;
 		Properties properties = null;
 		try {
-			File file = new File("C:/Users/mohanaj/eclipse_workspace/edi-processing/src/main/resources/rules.properties");
+			File file = new File(filePath);
 			fileInput = new FileInputStream(file);
 			properties = new Properties();
 			properties.load(fileInput);
@@ -75,14 +73,15 @@ public class FileReader {
 		} catch(IOException fe) {
 			
 		} 
-//		finally {
-//			try {
-//				fileInput.close();
-//			} catch (IOException e) {
-//			
-//			}
-//		}
 		return properties;
+	}
+	
+	public static Properties loadRules() {
+		return FileReader.loadProperties("/rules.properties");
+	}
+	
+	public static Properties loadApplicationProperties() {
+		return FileReader.loadProperties("/application.properties");
 	}
 
 	private static void readFile(Properties rules, String inputPath) throws Exception{
